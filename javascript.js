@@ -1,5 +1,6 @@
-var palavra = "dever de casa"
+var palavra = "Dever de casa"
 var limiteDeErros = 6
+var lista = []
 
 function encriptarPalavra(){
     
@@ -8,44 +9,78 @@ function encriptarPalavra(){
     for (let index = 0; index < palavra.length; index++) {        
         var char = palavra.substring(index,index+1)
         if (char != " ") {
-            result += "_"
+            result += "_ "
         } else {
-            result += " "
+            result += "  "
         }        
     }
-    document.getElementById("palavra").value = result
+    document.getElementById("palavra").innerText = result.trim()    
 }
 
 function verifica() {
     var char = document.getElementById("char").value
 
-    var palavraEncriptada = document.getElementById("palavra").value    
+    var palavraEncriptada = document.getElementById("palavra").innerText   
 
     var erro = true
 
     for (let index = 0; index < palavra.length; index++) {
         var charPalavra = palavra.substring(index,index+1)
 
-        if (charPalavra == char){
+        if (charPalavra.toLowerCase() == char.toLowerCase()){
             erro = false
-            palavraEncriptada = setCharAt(palavraEncriptada,index,char)
+            
+            novoChar = palavra.substring(index,index+1)
+
+            palavraEncriptada = setCharAt(palavraEncriptada,index*2,novoChar)
+            palavraEncriptada = palavraEncriptada.trim()
         }
+    }    
+
+    if (existeCharDentroDaLista(char) === false){
+
+        if (erro == true) {
+            var erroValue = document.getElementById("erro").value
+            var erroIncremento = parseInt(erroValue) + 1
+    
+            if (erroIncremento == limiteDeErros) {
+                alert("Você perdeu!")
+                location.reload()
+            }
+    
+            document.getElementById("erro").value = erroIncremento
+    
+            lista.push(char)
+        }
+    
+        var listaDeErros = ""
+        lista.forEach(c => {         
+            listaDeErros += c + ","
+        })
+    
+        listaDeErros = setCharAt(listaDeErros,listaDeErros.length-1,"")
+
+        document.getElementById("lista").value = listaDeErros
+
     }
 
-    if (erro == true) {
-        var erroValue = document.getElementById("erro").value
-        var erroIncremento = parseInt(erroValue) + 1
+    document.getElementById("palavra").innerText = palavraEncriptada
 
-        if (erroIncremento == limiteDeErros) {
-            alert("Você perdeu!")
-            location.reload()
+}
+
+function existeCharDentroDaLista(char){
+    var existe = false
+    
+    lista.forEach(c => {
+        if (char.trim() == c.trim()) {
+            existe = true
         }
+    })
 
-        document.getElementById("erro").value = erroIncremento
-    }
-
-
-    document.getElementById("palavra").value = palavraEncriptada
+    if (existe)
+        return true
+    else
+        return false
 }
 
 function setCharAt(str,index,chr) {

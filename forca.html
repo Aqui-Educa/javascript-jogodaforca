@@ -6,17 +6,24 @@
 <body onload="encriptarPalavra()">
 
 
-    <input type="text" id="palavra">
+    <div id="palavra" style="white-space: pre;">
+    </div>
 
-    <br><br><br><br>
+    <br><br>
 
-    <input type="text" id="char" style="width: 50px;">
+    <input type="text" id="char" style="width: 50px; text-align: center;" maxlength="1">
     <button onclick="verifica()">Verificar</button>
 
     <br><br><br>
 
     Erros:
-    <input type="text" id="erro" value="0" style="width: 50px;">
+    <input type="text" id="erro" value="0" style="width: 50px;" readonly>
+
+    <br><br>
+
+    Lista de caracteres inválidos:
+    <input type="text" id="lista" readonly>
+
 
 </body>
 </html>
